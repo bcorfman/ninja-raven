@@ -13,3 +13,8 @@ dependencies = [
     "hiredis>=3.1.0",
     "redis>=5.2.1",
 ]
+
+[tool.uv]
+dev-dependencies = [
+    "ipython>=8.31.0",
+]

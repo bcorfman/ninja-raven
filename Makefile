@@ -9,34 +9,33 @@ setup:
 
 # Install dependencies
 install:
-	uv python pin $(PYTHON_VERSION)
-	uv sync --frozen --no-dev
+	$(HOME)/.local/bin/uv sync --frozen --no-dev
 
 devinstall:
-	uv python pin $(PYTHON_VERSION)
-	uv add pytest pytest-cov --dev
-	uv sync --all-extras --dev
+	$(HOME)/.local/bin/uv python pin $(PYTHON_VERSION)
+	$(HOME)/.local/bin/uv add pytest pytest-cov --dev
+	$(HOME)/.local/bin/uv sync --all-extras --dev
 
 # Install tools
 tools:
-	uv tool install ruff --force
-	uv tool install ipython --force
+	$(HOME)/.local/bin/uv tool install ruff --force
+	$(HOME)/.local/bin/uv tool install ipython --force
 
 # Run tests
 test:
-	uv run pytest
+	$(HOME)/.local/bin/uv run pytest
 
 # Run the Django project
 run:
-	uv run python manage.py runserver
+	$(HOME)/.local/bin/uv run python manage.py runserver 0.0.0.0:8000
 
 # Lint code
 lint:
-	uv tool run ruff check -q
+	$(HOME)/.local/bin/uv tool run ruff check -q
 
 # Format code
 format:
-	uv tool run ruff format
+	$(HOME)/.local/bin/uv tool run ruff format
 
 # Docker-Compose Tasks
 compose-up:
@@ -47,7 +46,7 @@ compose-down:
 
 # Django Management Commands
 migrate:
-	uv run python manage.py migrate
+	$(HOME)/.local/bin/uv run python manage.py migrate
 
 # Initialize the Database and Services Locally
 init-local: compose-up devinstall migrate

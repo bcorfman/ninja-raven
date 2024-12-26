@@ -1,4 +1,4 @@
-version: '3.12'
+version: '3.8'
 
 services:
   redis:
@@ -8,18 +8,34 @@ services:
       - "6379:6379"  # Expose Redis on localhost
     restart: unless-stopped
 
-  postgres:
+  db:
     image: postgres:16
-    container_name: postgres
+    container_name: postgres-container
+    environment:
+      DB_NAME: ${DB_NAME}  
+      DB_USER: postgres  # default admin user
     ports:
       - "5432:5432"  # Expose PostgreSQL on localhost
-    environment:
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data  # Persistent storage
+      - ./scripts/init_db.sh:/docker-entrypoint-initdb.d/init_db.sh:ro  # Initialization script
     restart: unless-stopped
+
+  app:
+    build:
+      context: . 
+    ports:
+      - "8000:8000"  # Expose app on localhost
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+    command: >
+      sh -c "make migrate run"
 
 volumes:
   postgres_data:

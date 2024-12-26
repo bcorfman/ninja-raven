@@ -23,17 +23,6 @@ SECRET_KEY = config("SECRET_KEY", default="fallback-secret")
 DEBUG = config("DEBUG", default=True, cast=bool)
 
 
-DATABASES = {
-    "default": {
-        "ENGINE": config("DB_ENGINE", default="django.db.backends.postgresql"),
-        "NAME": config("DB_NAME", default="example"),
-        "USER": config("DB_USER", default="user"),
-        "PASSWORD": config("DB_PASSWORD", default="password"),
-        "HOST": config("DB_HOST", default="localhost"),
-        "PORT": config("DB_PORT", default="5432"),
-    }
-}
-
 ALLOWED_HOSTS = []
 
 
@@ -47,6 +36,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_dramatiq",
     "ninja",  # Django-Ninja
+    "ravenback",
 ]
 
 
@@ -84,15 +74,14 @@ ASGI_APPLICATION = "ravenback.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "your_db_name",
-        "USER": "your_db_user",
-        "PASSWORD": "your_db_password",
-        "HOST": "localhost",  # or the appropriate host for production
-        "PORT": "5432",
+        "ENGINE": config("DB_ENGINE", default="django.db.backends.postgresql"),
+        "NAME": config("DB_NAME", default="app_db"),
+        "USER": config("DB_USER", default="app_user"),
+        "PASSWORD": config("DB_PASSWORD", default="app_password"),
+        "HOST": config("DB_HOST", default="localhost"),
+        "PORT": config("DB_PORT", default="5432"),
     }
 }
 
