@@ -5,6 +5,8 @@
 __pycache__/
 *.py[cod]
 *$py.class
+# Correct rule to ignore pycache but not migrations:
+migrations/__pycache__/
 
 # C extensions
 *.so
