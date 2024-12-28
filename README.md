@@ -1,0 +1,1 @@
+A game engine backend for Raven Checkers designed with Django-Ninja
