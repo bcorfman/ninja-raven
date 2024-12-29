@@ -35,8 +35,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.staticfiles",
     "django_dramatiq",
+    "channels",  # for websockets
     "ninja",  # Django-Ninja
-    "ravenback",
+    "ravenback",  # my module
 ]
 
 
